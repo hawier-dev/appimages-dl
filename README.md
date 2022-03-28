@@ -1,12 +1,6 @@
 # AppImages Downloader
 
-## A simple application for downloading appimages.
-
----
-
-[Download](https://github.com/hawier-dev/appimages-dl/releases/latest)
-
----
+A simple application for downloading appimages.
 
 ### Installing
 
