@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import platform
 
-app = typer.Typer(help="Appimages downloader.")
+app = typer.Typer(help="Appimages downloader.", add_completion=False)
 page = requests.get("https://appimage.github.io/apps/")
 soup = BeautifulSoup(page.content, "html.parser")
 download_directory = str(Path.home()) + "/Applications"
