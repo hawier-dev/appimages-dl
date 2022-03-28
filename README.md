@@ -4,14 +4,13 @@
 
 ---
 
-**DOWNLOAD** [GitHub Pages](https://github.com/hawier-dev/appimages-dl/releases/latest)
+[DOWNLOAD](https://github.com/hawier-dev/appimages-dl/releases/latest)
 
 ---
 
 ### Usage
 
-Download Appimage:
-
 ```
+# Download Appimage:
 appimgdl get <appimage>
 ```
