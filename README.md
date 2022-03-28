@@ -11,7 +11,7 @@
 ### Installing
 
 ```
-curl
+curl https://raw.githubusercontent.com/hawier-dev/appimages-dl/main/install.sh | bash
 ```
 
 ### Usage
