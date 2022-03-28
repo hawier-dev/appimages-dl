@@ -137,6 +137,7 @@ def remove(
             if appimage in app.lower():
                 typer.echo(f"Deleting appimage: {app}")
                 os.remove(f"{download_directory}/{app}")
+                os.remove(f"{desktop_directory}/{appimage}.desktop")
                 return
         typer.echo(f"No application is matching name: {appimage}")
 
