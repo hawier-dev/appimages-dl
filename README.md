@@ -8,6 +8,12 @@
 
 ---
 
+### Installing
+
+```
+curl
+```
+
 ### Usage
 
 ##### Update repo:
