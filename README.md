@@ -53,3 +53,9 @@ appimgdl get <appimage>
 ```
 appimgdl remove <appimage>
 ```
+
+##### List of installed Appimages:
+
+```
+appimgdl list
+```
