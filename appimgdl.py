@@ -137,29 +137,24 @@ def get(appimage: str):
 @ app.command()
 def remove(
     appimage: str,
-    force: bool = typer.Option(
-        ...,
-        prompt="Are you sure to remove this appimage?",
-        help="Force deletion without confirmation.",
-    ),
 ):
     """
     Remove an appimage.
 
     If --force is not used, will ask for confirmation.
     """
-    if force:
-        appimages = os.listdir(download_directory)
-        for app in appimages:
-            if appimage in app.lower():
+    appimages = os.listdir(download_directory)
+    for app in appimages:
+        if appimage in app.lower():
+            force = typer.prompt(f"{app} (y,N)")
+            if force == 'y' or force == 'Y':
                 typer.echo(f"Deleting appimage: {app}")
                 os.remove(f"{download_directory}/{app}")
-                os.remove(f"{desktop_directory}/{appimage}.desktop")
-                return
-        typer.echo(f"No application is matching name: {appimage}")
-
-    else:
-        typer.echo("Operation cancelled")
+                if os.path.exists(f"{desktop_directory}/{appimage}.desktop"):
+                    os.remove(f"{desktop_directory}/{appimage}.desktop")
+                typer.echo(typer.style(
+                    f"Application {app} removed.", fg=typer.colors.GREEN, bold=True))
+    return
 
 
 @ app.command()
