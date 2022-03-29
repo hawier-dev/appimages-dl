@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import colorsys
 from gettext import install
 import os
 from pathlib import Path
@@ -129,7 +130,8 @@ def get(appimage: str):
                 download(download_link=download_link,
                          asset=first_asset, app=app)
                 return
-        print(f"App {appimage} not found")
+        typer.echo(typer.style(
+            f"App {appimage} not found", fg=typer.colors.RED, bold=True))
 
 
 @ app.command()
@@ -163,7 +165,7 @@ def remove(
 @ app.command()
 def updaterepo():
     """
-    Update an list of appimages.
+    Update the appimage list.
 
     If --force is not used, will ask for confirmation.
     """
@@ -177,6 +179,22 @@ def updaterepo():
         appimages.append(appid)
     with open(program_list_file, 'w') as f:
         f.write('\n'.join(appimages))
+
+
+@ app.command()
+def list():
+    """
+    List of installed Appimages.
+    """
+    if not os.path.exists(download_directory):
+        typer.echo(typer.style("No apps installed.", fg=typer.colors.RED))
+        return
+    appimages = os.listdir(download_directory)
+    if len(appimages) == 0:
+        typer.echo(typer.style("No apps installed.", fg=typer.colors.RED))
+        return
+    for appimage in appimages:
+        typer.echo(typer.style(appimage, fg=typer.colors.YELLOW))
 
 
 if __name__ == "__main__":
