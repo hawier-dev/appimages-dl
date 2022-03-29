@@ -19,7 +19,7 @@ python -m pip install typer beautifulsoup4 requests tqdm
 Download executable.
 
 ```
-wget https://github.com/hawier-dev/appimages-dl/releases/download/v0.0.1/appimgdl
+wget https://github.com/hawier-dev/appimages-dl/releases/download/v0.0.2/appimgdl
 ```
 
 Make it executable by the user.
