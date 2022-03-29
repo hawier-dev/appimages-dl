@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 from gettext import install
 import os
 from pathlib import Path
