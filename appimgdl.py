@@ -1,4 +1,5 @@
 
+from gettext import install
 import os
 from pathlib import Path
 from tqdm import tqdm
@@ -35,6 +36,19 @@ Type=Application"""
 def download(download_link: str, asset, app):
     # Downloading appimage
     print(f"Downloading: {asset.text}")
+    installed_apps = os.listdir(download_directory)
+    if asset.text in installed_apps:
+        typer.echo(typer.style("Latest version already installed.",
+                   fg=typer.colors.GREEN, bold=True))
+        return
+    for installed_app in installed_apps:
+        if app.lower().rstrip() in installed_app.lower():
+            print("Another version found. Remove?")
+            remove = input(f"{installed_app} (y,N)")
+            if remove == 'y' or remove == 'Y':
+                os.remove(f"{download_directory}/{installed_app}")
+                os.remove(
+                    f"{desktop_directory}/{app.lower().rstrip()}.desktop")
     appimage_path = f"{download_directory}/{asset.text}"
     response = requests.get(
         f"{download_link}/{asset.text}", stream=True)
@@ -77,7 +91,7 @@ def get(appimage: str):
     with open(program_list_file, 'r') as f:
         for app in f:
             if appimage == app.lower().rstrip():
-                print(f"Found: {app}")
+                print(f"Found: {app.rstrip()}")
                 try:
                     download_page = requests.get(
                         ("https://appimage.github.io/"+app).rstrip())
@@ -85,12 +99,13 @@ def get(appimage: str):
                     links = soup.find('a', attrs={"class": "button green"})
                     tag_link = links.get('href') + '/latest'
                 except AttributeError:
-                    print("Error: The download button could not be found.")
+                    typer.echo(typer.style(
+                        "Error: The download button could not be found.", fg=typer.colors.RED, bold=True))
                     return
                 tag_link = requests.get(tag_link).url
                 if '/tag/' not in tag_link:
-                    print(
-                        f"Error: Unable to find the latest version in {tag_link}.")
+                    typer.echo(typer.style(
+                        f"Error: Unable to find the latest version in {tag_link}.", fg=typer.colors.RED, bold=True))
                     return
                 download_link = tag_link.replace('tag', 'download')
 
